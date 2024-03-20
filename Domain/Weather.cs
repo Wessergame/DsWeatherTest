@@ -17,6 +17,5 @@ public class Weather
     public int? Visibility { get; set; }
     public string? WeatherPhenomena { get; set; }
 
-    public List<int>? WindDirectionIds { get; set; }
     public List<WindDirection>? WindDirections { get; set; }
 }
