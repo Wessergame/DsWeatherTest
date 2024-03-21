@@ -1,8 +1,39 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Главная страница";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 jumbotron">
+            <h1 class="text-center mb-4 display-4">Добро пожаловать в наш проект «Погодные архивы Москвы»</h1>
+            <p class="lead">
+                Приветствуем вас в нашем веб-приложении, посвященном погодным архивам города Москвы.
+                Здесь вы можете ознакомиться с архивными данными о погоде в Москве за разные периоды времени, а также загрузить свои собственные данные для анализа и обработки.
+            </p>
+            <p class="lead">
+                Наше приложение предоставляет удобный интерфейс для просмотра и загрузки погодных данных, а также инструменты для их визуализации.
+                Мы постоянно работаем над улучшением функциональности и добавлением новых возможностей, чтобы сделать использование нашего приложения максимально удобным и эффективным.
+            </p>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Просмотр архивов</h5>
+                    <p class="card-text">Вы можете просматривать данные за разные периоды времени и изучать тенденции погоды в городе.</p>
+                    <a asp-action="Show" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Загрузка архивов</h5>
+                    <p class="card-text">Здесь вы можете загружать свои собственные погодные данные для анализа и обработки в нашем приложении.</p>
+                    <a asp-action="Upload" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
