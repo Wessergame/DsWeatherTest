@@ -14,8 +14,13 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+        builder.Services.AddApplication();
+        builder.Services.AddPersistence(builder.Configuration);
 
         var app = builder.Build();
+
+        var uber = app.Services.CreateScope().ServiceProvider.GetService<UberDbContext>();
+        uber!.Database.EnsureCreated();
 
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
