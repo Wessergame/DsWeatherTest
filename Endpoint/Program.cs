@@ -1,3 +1,9 @@
+using Application;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Persistence;
+
 namespace Endpoint;
 
 public class Program
