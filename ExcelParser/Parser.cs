@@ -120,7 +120,7 @@ public class Parser
         List<WeatherData> result = [];
         using (FileStream file = new(filePath, FileMode.Open, FileAccess.Read))
         {
-            IWorkbook workbook = new XSSFWorkbook(file);
+            var workbook = new XSSFWorkbook(file);
 
             for (int sheetIndex = 0; sheetIndex < workbook.NumberOfSheets; sheetIndex++)
             {
