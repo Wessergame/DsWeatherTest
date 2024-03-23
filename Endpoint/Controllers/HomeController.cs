@@ -15,9 +15,16 @@ namespace Endpoint.Controllers;
 public class HomeController(ILogger<HomeController> logger, IMediator mediator) : Controller
 {
 
-    public HomeController(ILogger<HomeController> logger)
+    public async Task<IActionResult> Show()
     {
-        _logger = logger;
+        ViewBag.Months = Enumerable.Range(1, 12)
+            .Select(monthNumber => new SelectListItem { Value = monthNumber.ToString(), Text = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(monthNumber) })
+            .ToList();
+        ViewBag.Years = (await mediator.Send(new GetWeatherYearsQuery()))
+            .Years.Select(yearNumber => new SelectListItem { Value = yearNumber.ToString(), Text = yearNumber.ToString() })
+            .ToList();
+
+        return View(new List<WeatherData>());
     }
 
     public IActionResult Index()
