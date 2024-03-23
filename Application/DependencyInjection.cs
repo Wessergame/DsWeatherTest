@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using Application.Common.Behaviors;
 using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using Application.Common.Behaviors;
 
 namespace Application;
 
