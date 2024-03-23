@@ -13,6 +13,6 @@ public class WindDirectionConfiguration : IEntityTypeConfiguration<WindDirection
         builder.HasIndex(w => w.Id);
         builder.Property(w => w.Id).HasColumnType("integer").IsRequired().ValueGeneratedOnAdd();
 
-        builder.Property(w => w.Direction).IsRequired().HasColumnType("varchar(2)");
+        builder.Property(w => w.Direction).IsRequired().HasColumnType("varchar");
     }
 }
