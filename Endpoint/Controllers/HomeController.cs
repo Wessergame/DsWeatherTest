@@ -24,7 +24,7 @@ public class HomeController(ILogger<HomeController> logger, IMediator mediator) 
             .Years.Select(yearNumber => new SelectListItem { Value = yearNumber.ToString(), Text = yearNumber.ToString() })
             .ToList();
 
-        return View(new List<WeatherData>());
+        return View();
     }
 
     public IActionResult Index()
