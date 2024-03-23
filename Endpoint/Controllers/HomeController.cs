@@ -1,12 +1,19 @@
+using Application.Cqrs.Weathers.Queries.GetWeatherYears;
 using Endpoint.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Endpoint.Controllers;
 
-public class HomeController : Controller
+public class HomeController(ILogger<HomeController> logger, IMediator mediator) : Controller
 {
-    private readonly ILogger<HomeController> _logger;
 
     public HomeController(ILogger<HomeController> logger)
     {
