@@ -49,11 +49,9 @@
                     contentType: false,
                     processData: false,
                     success: function (data) {
-                        $('#statusMessage').html('<div class="alert alert-success" role="alert">Архив' +
-                            (files.length > 1 ? 'ы' : '') +
-                            ' успешно загружен' +
-                            (files.length > 1 ? 'ы' : '') +
-                            '!</div>');
+                        $('#statusMessage').html('<div class="alert alert-success" role="alert">' +
+                            data +
+                            '</div>');
                         $('#uploadButton').removeClass("disabled");
                         $('#uploadButton').empty();
                         $('#uploadButton').html(getButtonHtml(false));
