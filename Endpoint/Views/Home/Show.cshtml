@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Архив";
+}
+
+<link rel="stylesheet" href="~/css/Show.css" />
+
+@section Scripts {
+    <script src="~/js/Show.js"></script>
+}
+
+<h1>Просмотр архивов погодных условий</h1>
+
+<div class="row mb-3 align-items-center">
+    <div class="dropdown col-md-4">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="monthsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Выбрать месяца
+        </button>
+        <div class="dropdown-menu" aria-labelledby="monthsDropdown" onclick="handleCheckboxClick(event)">
+            @foreach (var month in ViewBag.Months)
+            {
+                <span class="dropdown-item d-flex align-items-center">
+                    <input class="form-check-input me-2 monthCheckbox" type="checkbox" id="month-@month.Value" value="@month.Value">
+                    <label class="form-check-label" for="month-@month.Value">@month.Text</label>
+                </span>
+            }
+        </div>
+    </div>
+
+    <div class="dropdown col-md-4">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="yearsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Выбрать года
+        </button>
+        <div class="dropdown-menu" aria-labelledby="yearsDropdown" onclick="handleCheckboxClick(event)">
+            @foreach (var year in ViewBag.Years)
+            {
+                <span class="dropdown-item d-flex align-items-center">
+                    <input class="form-check-input me-2 yearCheckbox" type="checkbox" id="year-@year.Value" value="@year.Value">
+                    <label class="form-check-label" for="year-@year.Value">@year.Text</label>
+                </span>
+            }
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <label for="pageSizeInput" class="form-label">Количество записей на странице</label>
+        <input type="number" class="form-control" id="pageSizeInput" min="10" max="1000" value="25" onkeyup="enforceMinMax(this)">
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Время (московское)</th>
+                <th>Температура воздуха, °C</th>
+                <th>Относительная влажность, %</th>
+                <th>Точка росы, °C</th>
+                <th>Атмосферное давление, мм рт.ст.</th>
+                <th>Направление ветра</th>
+                <th>Скорость ветра, м/с</th>
+                <th>Облачность, %</th>
+                <th>Нижняя граница облачности</th>
+                <th>Горизонтальная видимость, км</th>
+                <th>Погодные явления</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+</div>
+
+<nav aria-label="table navigation">
+    <ul class="pagination justify-content-center flex-sm-wrap" id="paginationList">
+    </ul>
+</nav>

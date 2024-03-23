@@ -1,0 +1,7 @@
+﻿.pagination a {
+    cursor: pointer;
+}
+
+.pagination .page-item.disabled a {
+    cursor: default;
+}
