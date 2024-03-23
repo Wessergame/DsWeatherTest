@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.DbContexts;
+using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,9 +13,10 @@ public class GetWeatherListQueryHandler(IWeatherDbContext dbContext) : IRequestH
 {
     public async Task<WeatherListVm> Handle(GetWeatherListQuery request, CancellationToken cancellationToken)
     {
-        var query = dbContext.Weathers
+        IQueryable<Weather> query = dbContext.Weathers
             .Where(w => (request.SelectedMonths == null || request.SelectedMonths.Length == 0 || request.SelectedMonths.Contains(w.Date.Month))
-            && (request.SelectedYears == null || request.SelectedYears.Length == 0 || request.SelectedYears.Contains(w.Date.Year)));
+            && (request.SelectedYears == null || request.SelectedYears.Length == 0 || request.SelectedYears.Contains(w.Date.Year)))
+            .OrderBy(w => w.Date);
 
         var countData = await query.CountAsync(cancellationToken);
 
