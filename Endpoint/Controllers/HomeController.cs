@@ -32,6 +32,11 @@ public class HomeController(ILogger<HomeController> logger, IMediator mediator) 
         return View();
     }
 
+    public IActionResult Upload()
+    {
+        return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

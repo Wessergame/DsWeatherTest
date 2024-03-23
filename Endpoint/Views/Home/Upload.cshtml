@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Загрузка";
+}
+
+<div class="container">
+    <h1 class="mb-5">Загрузка архивов погодных условий</h1>
+    <div class="mb-3">
+        <input type="file" id="weatherArchives" name="weatherArchives" multiple class="form-control" />
+    </div>
+    <button id="uploadButton" class="btn btn-primary">Загрузить</button>
+    <div id="statusMessage" class="mt-3"></div>
+</div>
+
+@section scripts {
+    <script>
+        function getButtonHtml(isLoaded) {
+            return isLoaded ? '<button class="btn btn-primary" type="button" disabled>' +
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>' +
+                ' Загрузка...</button>' : 'Загрузить';
+        }
+
+        function getAlert(text) {
+            return '<div class="alert alert-danger" role="alert">' + text + '</div>';
+        }
+
+        $(document).ready(function () {
+            $('#uploadButton').click(function () {
+                var formData = new FormData();
+                var files = $('#weatherArchives').get(0).files;
+
+                for (var i = 0; i < files.length; i++) {
+                    formData.append('files', files[i]);
+                }
+
+                if (files.length === 0) {
+                    $('#statusMessage').html(getAlert('Не были выбраны файлы'));
+                    return;
+                }
+
+                $('#statusMessage').empty();
+                $('#uploadButton').addClass("disabled");
+                $('#uploadButton').empty();
+                $('#uploadButton').html(getButtonHtml(true));
+
+                $.ajax({
+                    url: '/api/Ajax/UploadWeatherArchives',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        $('#statusMessage').html('<div class="alert alert-success" role="alert">Архив' +
+                            (files.length > 1 ? 'ы' : '') +
+                            ' успешно загружен' +
+                            (files.length > 1 ? 'ы' : '') +
+                            '!</div>');
+                        $('#uploadButton').removeClass("disabled");
+                        $('#uploadButton').empty();
+                        $('#uploadButton').html(getButtonHtml(false));
+                    },
+                    error: function (xhr, status, error) {
+                        $('#statusMessage').html(getAlert(xhr.responseText));
+                    }
+                });
+
+            });
+        });
+    </script>
+}
