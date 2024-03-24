@@ -1,4 +1,5 @@
 using Application;
+using Endpoint.Adapter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,6 +17,7 @@ public class Program
         builder.Services.AddControllersWithViews();
         builder.Services.AddApplication();
         builder.Services.AddPersistence(builder.Configuration);
+        builder.Services.AddTransient<ExcelToSqlAdapter>();
 
         var app = builder.Build();
 
