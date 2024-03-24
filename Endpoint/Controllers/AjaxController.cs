@@ -1,6 +1,9 @@
 ﻿using Application.Cqrs.Weathers.Queries.GetWeatherList;
+using Endpoint.Adapter;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,7 +11,7 @@ namespace Endpoint.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AjaxController(IMediator mediator) : ControllerBase
+    public class AjaxController(ExcelToSqlAdapter adapter, IMediator mediator) : ControllerBase
     {
         public class WeatherDataFilters
         {
@@ -37,6 +40,34 @@ namespace Endpoint.Controllers
             });
 
             return Ok(data);
+        }
+
+        [HttpPost]
+        [Route("UploadWeatherArchives")]
+        public async Task<IActionResult> UploadWeatherArchives([FromForm] List<IFormFile> files)
+        {
+            if (files.Count == 0) return Ok();
+
+            try
+            {
+                var failedFiles = await adapter.RunParallel(files);
+
+                if (failedFiles.Count == files.Count)
+                    return StatusCode(StatusCodes.Status400BadRequest, $"Файлы не удалось обработать.");
+
+                if (failedFiles.Count > 0)
+                    return Ok("Архивы были успешно загружены, но некоторые файлы не удалось обработать: " + string.Join(", ", failedFiles));
+
+                return Ok("Архивы были успешно загружены");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+            finally
+            {
+                adapter.Dispose();
+            }
         }
     }
 }
