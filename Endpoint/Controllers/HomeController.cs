@@ -22,6 +22,7 @@ public class HomeController(ILogger<HomeController> logger, IMediator mediator) 
             .ToList();
         ViewBag.Years = (await mediator.Send(new GetWeatherYearsQuery()))
             .Years.Select(yearNumber => new SelectListItem { Value = yearNumber.ToString(), Text = yearNumber.ToString() })
+            .OrderBy(x => x.Value)
             .ToList();
 
         return View();
